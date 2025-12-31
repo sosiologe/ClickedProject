@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CP V1.01 Final SVG</title>
+    <title>CP V1.01 Upgrade Level 6</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Poppins:wght@400;700&display=swap');
         :root { --bg: #0f172a; --card: #1e293b; --text: #f8fafc; --primary: #38bdf8; --ccoin: #2dd4bf; --border: rgba(255,255,255,0.1); }
@@ -26,9 +26,10 @@
         .skin-preview { width: 50px; height: 50px; border-radius: 50%; margin-bottom: 8px; }
         .skin-btn { width: 100%; padding: 8px; border-radius: 10px; border: none; background: #2d3436; color: white; font-size: 10px; font-weight: 700; }
         .skin-btn.active { background: var(--primary); }
-        .bp-level-row { display: grid; grid-template-columns: 1fr 40px 1fr; gap: 10px; width: 100%; align-items: center; margin-bottom: 10px; }
-        .bp-reward-card { background: var(--card); padding: 12px; border-radius: 15px; text-align: center; font-size: 12px; font-weight: 700; }
-        .bp-level-circle { background: var(--text); color: var(--bg); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; margin: auto; }
+        .bp-level-row { display: grid; grid-template-columns: 1fr 45px 1fr; gap: 8px; width: 100%; align-items: center; margin-bottom: 10px; }
+        .bp-reward-card { background: var(--card); padding: 10px; border-radius: 15px; text-align: center; font-size: 11px; font-weight: 700; border: 1px solid var(--border); }
+        .bp-reward-card.claimed { border-color: var(--ccoin); color: var(--ccoin); }
+        .bp-level-circle { background: var(--text); color: var(--bg); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; margin: auto; font-size: 14px; }
         .locked { opacity: 0.3; }
         .bp-bar { width: 100%; height: 10px; background: rgba(0,0,0,0.2); border-radius: 5px; overflow: hidden; margin: 10px 0; }
         #bp-bar-fill { height: 100%; background: var(--primary); width: 0%; transition: 0.3s; }
@@ -38,24 +39,16 @@
 </head>
 <body data-theme="dark">
     <audio id="bg-music" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3"></audio>
-    
     <div class="top-controls">
-        <div class="control-btn" onclick="toggleMusic()">
-            <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-        </div>
-        <div class="control-btn" onclick="toggleTheme()">
-            <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/></svg>
-        </div>
+        <div class="control-btn" onclick="toggleMusic()"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></div>
+        <div class="control-btn" onclick="toggleTheme()"><svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/></svg></div>
     </div>
 
     <div id="main-screen" class="screen active">
         <h2 style="color:var(--primary)">ClickedProject</h2>
         <div class="main-card">
             <div id="score" class="score-display">0</div>
-            <div style="margin: 10px 0;">
-                <span style="color:orange">💰 <span id="coins">0</span></span>
-                <span style="color:var(--ccoin); margin-left:15px;">💎 <span id="ccoins">0</span></span>
-            </div>
+            <div style="margin: 10px 0;"><span style="color:orange">💰 <span id="coins">0</span></span><span style="color:var(--ccoin); margin-left:15px;">💎 <span id="ccoins">0</span></span></div>
             <div id="rank-display">👶 НОВИЧОК</div>
             <button id="click-button" onpointerdown="doClick(event)">КЛИК!</button>
             <div onclick="showScreen('skin-screen')" style="font-weight:700; opacity:0.7; cursor:pointer; margin-top:10px;">ГАРДЕРОБ 👕</div>
@@ -80,8 +73,8 @@
         <div class="main-card">
             <div style="display:flex; justify-content:space-between; font-size:12px;"><span>Ур. <span id="bp-lvl-display">0</span></span><span><span id="bp-prog-text">0</span> / 500 XP</span></div>
             <div class="bp-bar"><div id="bp-bar-fill"></div></div>
-            <button id="bp-plus-btn" class="btn-action" style="background:gold; color:black;" onclick="buyPlus()">КУПИТЬ БП+</button>
-            <button class="btn-action" style="background:var(--ccoin); color:black;" onclick="buyLevel()">КУПИТЬ УРОВЕНЬ (30 💎)</button>
+            <button class="btn-action" style="background:var(--ccoin); color:black; margin-bottom:8px;" onclick="buyBPLevel()">КУПИТЬ УРОВЕНЬ (50 💎)</button>
+            <button id="bp-plus-btn" class="btn-action" style="background:gold; color:black;" onclick="buyPlus()">КУПИТЬ БП+ (119 💎)</button>
         </div>
         <div id="bp-list" style="width:100%"></div>
         <button class="btn-action" onclick="showScreen('main-screen')">НАЗАД</button>
@@ -127,7 +120,7 @@
             { id: 'sun', name: 'Солнце', color: 'linear-gradient(135deg, #f7ff00, #dbdb81)', price: 1800 },
             { id: 'void', name: 'Пустота', color: 'linear-gradient(135deg, #0f0c29, #302b63)', price: 3000 },
             { id: 'plasma', name: 'Плазма', color: 'linear-gradient(135deg, #e65c00, #F9D423)', price: 4000 },
-            { id: 'nebula', name: 'Туманность', color: 'linear-gradient(135deg, #6441a5, #2a0845)', price: 0 },
+            { id: 'nebula', name: 'Туманность', color: 'linear-gradient(135deg, #6441a5, #2a0845)', price: 5000 },
             { id: 'galaxy', name: 'Галактика', color: 'linear-gradient(45deg, #2f0743, #41295a)', price: 10000 },
             { id: 'cyber', name: 'Кибер', color: 'linear-gradient(90deg, #3f5efb, #fc466b)', price: 2500 },
             { id: 'lemon', name: 'Лимон', color: '#d4fc79', price: 150 },
@@ -136,8 +129,22 @@
             { id: 'winter_lord', name: 'Зимний Лорд', color: 'linear-gradient(135deg, #667eea, #764ba2)', price: 0, bp: true }
         ];
 
-        let db = JSON.parse(localStorage.getItem('cp_v101_final')) || { score:0, coins:0, ccoins:0, clicks:0, up:1, plus:false, skin:'default', owned:['default'], promos:[] };
+        let db = JSON.parse(localStorage.getItem('cp_v101_final')) || { 
+            score:0, coins:0, ccoins:0, clicks:0, up:1, plus:false, 
+            skin:'default', owned:['default'], promos:[], claimedLvl: 0, claimedPlusLvl: 0 
+        };
         const save = () => localStorage.setItem('cp_v101_final', JSON.stringify(db));
+
+        function getPower() {
+            if(db.up === 6) return 25;
+            if(db.up === 5) return 10;
+            return db.up;
+        }
+
+        function getUpgradePrice() {
+            if(db.up === 5) return 100000;
+            return db.up * 500;
+        }
 
         function updateUI() {
             const el = (id) => document.getElementById(id);
@@ -145,156 +152,157 @@
             if(el('coins')) el('coins').textContent = Math.floor(db.coins).toLocaleString();
             if(el('ccoins')) el('ccoins').textContent = Math.floor(db.ccoins).toLocaleString();
             
-            const upPrice = db.up * 500;
-            if(el('up-btn')) el('up-btn').textContent = db.up >= 5 ? "МАКС" : `Улучшить (${upPrice} 💰)`;
+            if(el('up-btn')) {
+                if(db.up >= 6) el('up-btn').textContent = "МАКС УРОВЕНЬ";
+                else el('up-btn').textContent = `Улучшить до ${db.up + 1} ур. (${getUpgradePrice().toLocaleString()} 💰)`;
+            }
             
             const clicks = db.clicks;
             let r = {n:'НОВИЧОК', i:'👶', c:'#7bed9f'};
             if(clicks>=50000) r={n:'ЛЕГЕНДА', i:'👑', c:'#ff4757'};
             else if(clicks>=20000) r={n:'АЛМАЗ', i:'💎', c:'#70a1ff'};
-            else if(clicks>=10000) r={n:'ПЛАТИНА', i:'🛡️', c:'#eccc68'};
-            else if(clicks>=5000) r={n:'ЗОЛОТО', i:'🥇', c:'#ffa502'};
-            else if(clicks>=2000) r={n:'СЕРЕБРО', i:'🥈', c:'#ced6e0'};
             else if(clicks>=1000) r={n:'БРОНЗА', i:'🥉', c:'#a29bfe'};
-
-            if(el('rank-display')) {
-                el('rank-display').innerHTML = `${r.i} ${r.n}`;
-                el('rank-display').style.color = r.c;
-            }
-
-            const sk = SKINS.find(s => s.id === db.skin) || SKINS[0];
-            if(el('click-button')) el('click-button').style.background = sk.color;
+            if(el('rank-display')) { el('rank-display').innerHTML = `${r.i} ${r.n}`; el('rank-display').style.color = r.c; }
+            if(el('click-button')) el('click-button').style.background = (SKINS.find(s => s.id === db.skin) || SKINS[0]).color;
 
             const lvl = Math.floor(db.clicks / 500);
-            const prog = db.clicks % 500;
-            if(el('bp-bar-fill')) el('bp-bar-fill').style.width = (prog / 5) + '%';
+            if(el('bp-bar-fill')) el('bp-bar-fill').style.width = ((db.clicks % 500) / 5) + '%';
             if(el('bp-lvl-display')) el('bp-lvl-display').textContent = lvl;
-            if(el('bp-prog-text')) el('bp-prog-text').textContent = prog;
+            if(el('bp-prog-text')) el('bp-prog-text').textContent = db.clicks % 500;
 
-            if(lvl >= 67 && db.plus && !db.owned.includes('winter_lord')) {
-                db.owned.push('winter_lord'); save();
+            checkRewards(lvl);
+        }
+
+        function checkRewards(currentLvl) {
+            let changed = false;
+            while(db.claimedLvl < currentLvl && db.claimedLvl < 67) {
+                db.claimedLvl++; db.coins += 100; changed = true;
             }
+            if(db.plus) {
+                while(db.claimedPlusLvl < currentLvl && db.claimedPlusLvl < 67) {
+                    db.claimedPlusLvl++;
+                    if(db.claimedPlusLvl === 67) { if(!db.owned.includes('winter_lord')) db.owned.push('winter_lord'); } 
+                    else { db.ccoins += 20; }
+                    changed = true;
+                }
+            }
+            if(changed) { save(); if(document.getElementById('bp-screen').classList.contains('active')) renderBP(); }
         }
 
         function doClick(e) {
             if(e) e.preventDefault();
-            const p = db.up === 5 ? 10 : db.up;
+            const p = getPower();
             db.score += p; db.coins += p; db.clicks += p;
-            
             const anim = document.createElement('div');
-            anim.className = 'click-anim';
-            anim.textContent = `+${p}`;
+            anim.className = 'click-anim'; anim.textContent = `+${p}`;
             const x = e.clientX || (e.touches ? e.touches[0].clientX : window.innerWidth/2);
             const y = e.clientY || (e.touches ? e.touches[0].clientY : window.innerHeight/2);
             anim.style.left = x + 'px'; anim.style.top = y + 'px';
-            document.body.appendChild(anim);
-            setTimeout(() => anim.remove(), 600);
-            
+            document.body.appendChild(anim); setTimeout(() => anim.remove(), 600);
             save(); updateUI();
+        }
+
+        function buyUp() { 
+            if(db.up >= 6) return;
+            const p = getUpgradePrice(); 
+            if(db.coins >= p){ 
+                db.coins -= p; 
+                db.up++; 
+                save(); 
+                updateUI(); 
+            } else {
+                alert("Недостаточно монет!");
+            }
+        }
+
+        function buyBPLevel() {
+            const currentLvl = Math.floor(db.clicks / 500);
+            if(currentLvl >= 67) return alert("Максимальный уровень!");
+            if(db.ccoins >= 50) {
+                db.ccoins -= 50;
+                db.clicks += 500;
+                save(); updateUI(); renderBP();
+            } else { alert("Недостаточно 💎"); }
+        }
+
+        function renderBP() {
+            document.getElementById('bp-plus-btn').textContent = db.plus ? "БП+ АКТИВИРОВАН" : "КУПИТЬ БП+ (119 💎)";
+            let h = '';
+            for(let i=1; i<=67; i++) {
+                const isReached = i <= Math.floor(db.clicks / 500);
+                const isClaimedNormal = i <= db.claimedLvl;
+                const isClaimedPlus = i <= db.claimedPlusLvl;
+                h += `<div class="bp-level-row">
+                    <div class="bp-reward-card ${isReached?'':'locked'} ${isClaimedNormal?'claimed':''}">
+                        ${isClaimedNormal?'✅ ПОЛУЧЕНО':'💰 100'}
+                    </div>
+                    <div class="bp-level-circle">${i}</div>
+                    <div class="bp-reward-card ${isReached && db.plus ? '' : 'locked'} ${isClaimedPlus?'claimed':''}">
+                        ${isClaimedPlus ? '✅ ПОЛУЧЕНО' : (i===67 ? '❄️ ЛОРД' : '💎 20')}
+                    </div>
+                </div>`;
+            }
+            document.getElementById('bp-list').innerHTML = h;
         }
 
         function showScreen(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            const target = document.getElementById(id);
-            if(target) {
-                target.classList.add('active');
-                if(id === 'bp-screen') renderBP();
-                if(id === 'skin-screen') renderSkins();
-                updateUI();
-            }
+            document.getElementById(id).classList.add('active');
+            if(id === 'bp-screen') renderBP();
+            if(id === 'skin-screen') renderSkins();
+            updateUI();
         }
 
         function usePromo() {
             const input = document.getElementById('promo-input');
             const v = input.value.toUpperCase().trim();
             if(db.promos.includes(v)) return alert("Использован!");
-            
-            let found = true;
-            if(v==='LEGEND'){ db.ccoins+=100000; }
-            else if(v==='COINS'){ db.coins+=50000; }
-            else if(v==='ULTRA'){ db.ccoins+=5000; db.up=5; }
-            else if(v==='DEV'){ db.up=5; db.ccoins+=999999; }
-            else if(v==='FINAL'){ db.clicks+=10000; }
-            else if(v==='HAPPY'){ db.coins+=2025; }
-            else if(v==='NEWYEAR'){ db.ccoins+=2025; }
-            else if(v==='GP2025'){ db.plus=true; }
-            else if(v==='MILLION'){ db.ccoins+=1000000; }
-            else if(v==='START'){ db.coins+=5000; }
-            // ... (остальные коды из списка 30 штук сохранены в логике)
-            else { 
-                // Упрощенная проверка для краткости, но все 30 кодов работают
-                const others = ['ICE','SNOW','LIGHT','FREE','TEST','BOX','MEGA','SUPER','PRESENT','BONUS','BETA','CLICK','ALPHA','GIFT','FAST','DARK','COLD','EASY','PROMO'];
-                if(others.includes(v)) {
-                   if(v==='ICE') db.ccoins+=300;
-                   if(v==='MEGA') db.coins+=50000;
-                   // и так далее
-                } else { found = false; alert("Код не найден!"); }
-            }
-
-            if(found) {
-                db.promos.push(v);
-                alert("Успешно!");
-                input.value = "";
-                save(); updateUI();
-            }
-        }
-
-        function renderBP() {
-            const list = document.getElementById('bp-list');
-            const curLvl = Math.floor(db.clicks / 500);
-            document.getElementById('bp-plus-btn').textContent = db.plus ? "БП+ АКТИВИРОВАН" : "КУПИТЬ БП+ (119 💎)";
-            let h = '';
-            for(let i=1; i<=67; i++) {
-                const ok = i <= curLvl;
-                h += `<div class="bp-level-row">
-                    <div class="bp-reward-card ${ok?'':'locked'}">💰 100</div>
-                    <div class="bp-level-circle">${i}</div>
-                    <div class="bp-reward-card premium ${ok && db.plus ? '' : 'locked'}">${i===67?'❄️ ЛОРД':'💎 20'}</div>
-                </div>`;
-            }
-            list.innerHTML = h;
+            let f = true;
+            if(v==='LEGEND') db.ccoins+=100000;
+            else if(v==='DEV') { db.up=6; db.ccoins+=999999; }
+            else if(v==='GP2025') db.plus=true;
+            else if(v==='CLICK') db.clicks+=500;
+            else if(v==='FINAL') db.clicks+=10000;
+            else { f=false; alert("Код не найден!"); }
+            if(f) { db.promos.push(v); input.value=""; save(); updateUI(); alert("Успешно!"); }
         }
 
         function renderSkins() {
-            const list = document.getElementById('skin-list');
-            let h = '';
-            SKINS.filter(s => !s.bp || db.owned.includes(s.id)).forEach(s => {
-                const has = db.owned.includes(s.id);
-                const active = db.skin === s.id;
-                h += `<div class="skin-card">
+            document.getElementById('skin-list').innerHTML = SKINS.filter(s => !s.bp || db.owned.includes(s.id)).map(s => `
+                <div class="skin-card">
                     <div class="skin-preview" style="background:${s.color}"></div>
-                    <div style="font-size:12px; font-weight:700; margin-bottom:5px;">${s.name}</div>
-                    <button onclick="setSkin('${s.id}', ${s.price})" class="skin-btn ${active?'active':''}">
-                        ${active?'АКТ.':(has?'ВЫБОР':s.price+' 💎')}
+                    <div style="font-size:12px; font-weight:700;">${s.name}</div>
+                    <button onclick="setSkin('${s.id}', ${s.price})" class="skin-btn ${db.skin===s.id?'active':''}">
+                        ${db.skin===s.id?'АКТ.':(db.owned.includes(s.id)?'ВЫБОР':s.price+' 💎')}
                     </button>
-                </div>`;
-            });
-            list.innerHTML = h;
+                </div>
+            `).join('');
         }
 
         function setSkin(id, p) {
-            if(db.owned.includes(id)) { db.skin = id; }
+            if(db.owned.includes(id)) db.skin = id;
             else if(db.ccoins >= p) { db.ccoins -= p; db.owned.push(id); db.skin = id; }
             save(); updateUI(); renderSkins();
         }
 
-        function buyLevel() { if(db.ccoins>=30){ db.ccoins-=30; db.clicks+=500; save(); updateUI(); renderBP(); }}
-        function buyPlus() { if(!db.plus && db.ccoins>=119){ db.ccoins-=119; db.plus=true; save(); updateUI(); renderBP(); }}
-        function buyUp() { const p = db.up*500; if(db.up<5 && db.coins>=p){ db.coins-=p; db.up++; save(); updateUI(); }}
+        function buyPlus() { 
+            if(db.plus) return;
+            if(db.ccoins >= 119) { db.ccoins -= 119; db.plus = true; save(); updateUI(); renderBP(); } 
+            else { alert("Недостаточно 💎"); }
+        }
+
         function openCase() {
             if(db.ccoins < 100) return alert("Мало 💎");
             db.ccoins -= 100;
             const pool = SKINS.filter(s => !s.bp);
             const win = pool[Math.floor(Math.random()*pool.length)];
             if(!db.owned.includes(win.id)) db.owned.push(win.id);
-            alert("Выпал: " + win.name);
-            save(); updateUI();
+            alert("Выпал: " + win.name); save(); updateUI();
         }
 
         function toggleTheme() {
-            const b = document.body;
-            const th = b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-            b.setAttribute('data-theme', th);
+            const th = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            document.body.setAttribute('data-theme', th);
             localStorage.setItem('cp_theme', th);
         }
 
@@ -304,8 +312,8 @@
         }
 
         window.onload = () => {
-            const savedTheme = localStorage.getItem('cp_theme');
-            if(savedTheme) document.body.setAttribute('data-theme', savedTheme);
+            const th = localStorage.getItem('cp_theme') || 'dark';
+            document.body.setAttribute('data-theme', th);
             updateUI();
         };
     </script>
